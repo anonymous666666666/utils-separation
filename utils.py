@@ -1,29 +1,16 @@
 # utils.py
-from pathlib import Path
-import pandas as pd
 
+def say_hello(name: str) -> str:
+    """Return a hello message for the given name."""
+    return f"Hello, {name}!"
 
-def read_data(path: str | Path) -> pd.DataFrame:
-    """Read input CSV file."""
-    return pd.read_csv(path)
+def add_numbers(a: int, b: int) -> int:
+    """Return the sum of two numbers."""
+    return a + b
 
-
-def clean_data(df: pd.DataFrame) -> pd.DataFrame:
-    """Drop rows with NA and add total column (price * qty)."""
-    out = df.dropna().copy()
-    if "price" in out.columns and "qty" in out.columns:
-        out["total"] = out["price"].astype(float) * out["qty"].astype(float)
-    return out
-
-
-def write_data(df: pd.DataFrame, path: str | Path) -> None:
-    """Write output CSV file."""
-    Path(path).parent.mkdir(parents=True, exist_ok=True)
-    df.to_csv(path, index=False)
-
-
-def pipeline(in_path: str | Path, out_path: str | Path) -> None:
-    """End-to-end pipeline: read → clean → write."""
-    df = read_data(in_path)
-    df = clean_data(df)
-    write_data(df, out_path)
+def pipeline() -> None:
+    """Example pipeline with no external input."""
+    msg = say_hello("World")
+    total = add_numbers(3, 4)
+    print(msg)
+    print(f"3 + 4 = {total}")
